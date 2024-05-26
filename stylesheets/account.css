@@ -1,0 +1,60 @@
+.account-form {
+    border: 2px solid #cfd1d8;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    font-size: inherit; 
+    background: #000000;
+    color: #2e323c;
+    width: 300px;
+}
+
+.account-form::placeholder {
+    color: #000000; 
+    opacity: 1;     
+}
+
+.form-group {
+    color: #ffffff;
+}
+
+.card {
+    background-color: rgb(25, 25, 25) !important;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    border-radius: 12px;
+    border: 0;
+    margin-bottom: 1rem;
+}
+
+.success-box {
+    box-shadow: 0 0px 8px rgba(255, 255, 255, 0.1);
+    background-color: #036e5f  !important;
+    color: white;
+    border-radius: 12px;
+}
+
+.custom-account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    width: 60%;
+    background-color: rgb(25, 25, 25) !important;
+
+}
+
+@media (max-width: 796px) {
+    .custom-account {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
+
+.card-custom {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0px 8px rgba(255, 255, 255, 0.1);
+    background-color: rgb(25, 25, 25) !important;
+    border: none;
+}

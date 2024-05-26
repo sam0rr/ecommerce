@@ -61,7 +61,7 @@ function updateUserInLocalStorage() {
     };
 
     localStorage.setItem('user', JSON.stringify(updatedUser));
-    showSuccessBox(); // Display success message
+    sessionStorage.setItem('success', 'true'); // Set success flag
     location.reload(); // Refresh the page
 }
 
@@ -69,9 +69,17 @@ function showSuccessBox() {
     document.getElementById('success-box').style.display = 'block';
 }
 
+function checkForSuccessMessage() {
+    if (sessionStorage.getItem('success') === 'true') {
+        showSuccessBox();
+        sessionStorage.removeItem('success'); // Clear the flag
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     updateAccountLink();
     updatePlaceholder();
+    checkForSuccessMessage(); // Check for the success flag
 
     const updateButton = document.getElementById('updateButton');
     if (updateButton) {

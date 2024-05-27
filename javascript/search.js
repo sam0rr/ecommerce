@@ -1,7 +1,10 @@
+let allProducts = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeSearch();
     attachInputEvent();
     attachDocumentClickEvent();
+    prefetchAllProducts();
 });
 
 function attachDocumentClickEvent() {
@@ -26,6 +29,7 @@ function attachInputEvent() {
     const searchInput = document.getElementById('search-input');
     searchInput.addEventListener('input', handleInput);
     searchInput.addEventListener('keydown', handleEnterKey);
+    searchInput.addEventListener('click', handleInput);
 }
 
 function handleInput(event) {
@@ -50,23 +54,27 @@ function performSearch() {
 }
 
 function updateSuggestions(inputText) {
-    if (inputText.length < 1) {
-        fetchAllProducts();
-        return;
+    let filteredProducts = allProducts;
+    if (inputText.length > 0) {
+        filteredProducts = allProducts.filter(product =>
+            product.title.toLowerCase().includes(inputText.toLowerCase())
+        );
     }
-    fetch(`https://dummyjson.com/products/search?q=${inputText}`)
-        .then(response => response.json())
-        .then(data => {
-            displaySortedProducts(data.products, inputText);
-        });
+    displaySortedProducts(filteredProducts, inputText);
 }
 
-function fetchAllProducts() {
-    fetch(`https://dummyjson.com/products`)
-        .then(response => response.json())
-        .then(data => {
-            displaySortedProducts(data.products);
-        });
+async function prefetchAllProducts() {
+    let limit = 30;
+    let skip = 0;
+    let totalProducts = 0;
+
+    do {
+        const response = await fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`);
+        const data = await response.json();
+        allProducts = allProducts.concat(data.products);
+        totalProducts = data.total;
+        skip += limit;
+    } while (allProducts.length < totalProducts);
 }
 
 function normalizeText(text) {
